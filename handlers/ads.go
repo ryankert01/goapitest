@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/ryankert01/goapitest/database"
 	"github.com/ryankert01/goapitest/models"
+	"github.com/ryankert01/goapitest/utils"
 	// "gorm.io/datatypes"
 	// "fmt"
 )
@@ -22,9 +23,11 @@ func CreateAd(c *fiber.Ctx) error {
 		})
 	}
 
-	// cond := datatypes.JSONQuery(ad.Conditions)
-
-	// fmt.Printf("ad: %v\n", ad.Conditions)
+	if utils.IsAdAlive(*ad) {
+		ad.IsActive = true
+	} else {
+		ad.IsActive = false
+	}
 
 	database.DB.Db.Create(&ad)
 	return c.Status(200).JSON(ad)

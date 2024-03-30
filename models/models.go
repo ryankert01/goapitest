@@ -12,5 +12,6 @@ type AD struct {
 	Title      string         `json:"title"`
 	StartAt    time.Time      `json:"startAt"`
 	EndAt      time.Time      `json:"endAt"`
+	IsActive   bool           `gorm:"default:false"`
 	Conditions datatypes.JSON `json:"conditions"`
 }
