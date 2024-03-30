@@ -7,8 +7,9 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 
-	"github.com/ryanadiputraa/factful/models"
+	"github.com/ryankert01/goapitest/models"
 )
 
 type Dbinstance struct {
@@ -37,5 +38,9 @@ func ConnectDB() {
 	db.Logger = db.Logger.LogMode(logger.Info)
 
 	log.Println("Migrating the schema...")
-	db.AutoMigrate(&models.Fact{})
+	db.AutoMigrate(&models.AD{})
+
+	DB = Dbinstance{
+		Db: db,
+	}
 }

@@ -1,11 +1,16 @@
 package models
 
 import (
+	"time"
+
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )
 
-type Fact struct {
+type AD struct {
 	gorm.Model
-	Question string `json:"question" gorm:"unique";not null;default:null`
-	Answer   string `json:"answer" gorm:"text";not null;default:null`
+	Title      string         `json:"title"`
+	StartAt    time.Time      `json:"startAt"`
+	EndAt      time.Time      `json:"endAt"`
+	Conditions datatypes.JSON `json:"conditions"`
 }
