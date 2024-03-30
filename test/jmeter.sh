@@ -32,6 +32,8 @@ if ! command -v jmeter &> /dev/null; then
 fi
 
 echo "Running JMeter tests..."
-JVM_ARGS="-Xms3072m -Xmx3072m" jmeter -n -t ./test/test.jmx -l log.jtl
-
+# make sure log.jtl and report folder are not present
+rm -f log.jtl
+rm -rf ./test/report
+JVM_ARGS="-Xms3g -Xmx3g" jmeter -n -t ./test/test.jmx -l log.jtl -e -o ./test/report
 echo "JMeter tests completed!"

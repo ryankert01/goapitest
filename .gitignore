@@ -1,2 +1,3 @@
-jmeter.log
 log.jtl
+*.log
+test/report/*
