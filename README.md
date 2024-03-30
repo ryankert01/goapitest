@@ -16,16 +16,42 @@ DB_NAME=ryankert
 docker compose up
 ```
 
+3. run jmeter test in cli
+
+```bash
+chmod +x ./test/jmeter.sh
+./test/jmeter.sh
+```
+
+or, alternatively
+
+```bash
+bash ./test/jmeter.sh
+```
+
 ### Development
 
-install dependencies
+1. install dependencies
 
 ```bash
 go mod tidy
 ```
 
-port docker environment's terminal
+2. port docker environment's terminal
 
 ```bash
 docker compose run --service-ports web bash
+```
+
+3. run jmeter in cli
+
+```bash
+jmeter -n -t ./test/test.jmx -l log.jtl
+```
+
+according to the [documentation](https://jmeter.apache.org/usermanual/get-started.html#non_gui).  
+to enhance the jvm heap size, we set variable at front, as describe in the [doc](https://jmeter.apache.org/usermanual/get-started.html#running):
+
+```bash
+JVM_ARGS="-Xms3072m -Xmx3072m" jmeter -n -t ./test/test.jmx -l log.jtl
 ```
