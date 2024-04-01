@@ -38,7 +38,7 @@ func ConnectDB() {
 	db.Logger = db.Logger.LogMode(logger.Info)
 
 	log.Println("Migrating the schema...")
-	db.AutoMigrate(&models.AD{})
+	db.AutoMigrate(&models.AD{}, &models.Conditions{})
 
 	DB = Dbinstance{
 		Db: db,

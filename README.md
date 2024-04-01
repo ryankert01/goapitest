@@ -16,6 +16,12 @@ DB_NAME=ryankert
 docker compose up
 ```
 
+to turn down:
+
+```bash
+docker compose down
+```
+
 3. run jmeter test in cli
 
 ```bash
@@ -54,4 +60,11 @@ to enhance the jvm heap size, we set variable at front, as describe in the [doc]
 
 ```bash
 JVM_ARGS="-Xms3072m -Xmx3072m" jmeter -n -t ./test/test.jmx -l log.jtl
+```
+
+4. remove local postgre volume
+
+```bash
+docker volume ls
+docker volume rm goapitest_postres-db
 ```
