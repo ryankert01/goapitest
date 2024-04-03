@@ -71,7 +71,7 @@ docker volume rm goapitest_postres-db
 
 ### Design
 
-#### Database implementation：Postgres Materialized Views
+#### Database Design 1: Postgres Materialized Views
 
 主要除存資料使用postgres，並且由於isAlive的Ads每秒可能有不同，因此每秒要清掉存在RAM的cache，且Requests的可能性為`100(age)*2(gender)*249(countries)*3(platform) ~ 1e5` 約為10000rps目標的10倍，因此放棄使用cache(eg. Redis)。  
 
@@ -83,5 +83,7 @@ PostgreSQL allows a non-blocking refresh option (REFRESH MATERIALIZED VIEW CONCU
 
 因此我使用**Non-blocking Materialized View**，並且每秒進行`REFRESH`，確保Ad is alive，也希望能達到最高效率。
 
+#### Database Design 2: Update per minute
 
+Base on我對Dcard的觀察，用戶主要集中在兩個國家(`TW`,`JP`)，因此Requests的可能性約為`100(age)*2(gender)*2(countries)*3(platform) ~ 1e3` 小於10000十倍，而且廣告投放常理來說是以小時為單位，因此可以使用Redis進行Caching，並且1hr清除Cache一次。
 
