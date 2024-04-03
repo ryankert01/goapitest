@@ -68,3 +68,20 @@ JVM_ARGS="-Xms3072m -Xmx3072m" jmeter -n -t ./test/test.jmx -l log.jtl
 docker volume ls
 docker volume rm goapitest_postres-db
 ```
+
+### Design
+
+#### Database implementation：Postgres Materialized Views
+
+主要除存資料使用postgres，並且由於isAlive的Ads每秒可能有不同，因此每秒要清掉存在RAM的cache，且Requests的可能性為`100(age)*2(gender)*249(countries)*3(platform) ~ 1e5` 約為10000rps目標的10倍，因此放棄使用cache(eg. Redis)。  
+
+Materialized View:  
+Materialized View can maintain a precomputed list of records within the desired time range.
+
+Non-blocking Materialized View:  
+PostgreSQL allows a non-blocking refresh option (REFRESH MATERIALIZED VIEW CONCURRENTLY your_view). This allows you to query the materialized view even while it is being refreshed. The view will continue to show the old data until the refresh is complete. 
+
+
+
+
+
